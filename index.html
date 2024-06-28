@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Image/Video Downloader</title>
+<script>
+    function downloadInstagramMedia() {
+        var url = document.getElementById("instagramUrl").value.trim();
+        
+        // Check if the URL is valid (you may want to add more validation)
+        if (url.startsWith("https://www.instagram.com/") && (url.includes("/p/") || url.includes("/tv/"))) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var html = xhr.responseText;
+                    var startIndex, endIndex;
+                    
+                    // Find the image or video URL in the HTML response
+                    if (html.includes("og:image")) {
+                        startIndex = html.indexOf('og:image" content="') + 'og:image" content="'.length;
+                        endIndex = html.indexOf('"', startIndex);
+                    } else if (html.includes("og:video")) {
+                        startIndex = html.indexOf('og:video" content="') + 'og:video" content="'.length;
+                        endIndex = html.indexOf('"', startIndex);
+                    }
+                    
+                    // Extract the media URL
+                    var mediaUrl = html.substring(startIndex, endIndex);
+                    
+                    // Create a link element and trigger download
+                    var a = document.createElement("a");
+                    a.href = mediaUrl;
+                    a.download = "instagram_media";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    
+                    // Clear the input field
+                    document.getElementById("instagramUrl").value = "";
+                }
+            };
+            xhr.send();
+        } else {
+            alert("Please enter a valid Instagram post or video URL.");
+        }
+    }
+</script>
+</head>
+<body>
+    <h2>Instagram Image/Video Downloader</h2>
+    <p>Enter the URL of an Instagram post or video:</p>
+    <input type="text" id="instagramUrl" style="width: 80%; padding: 10px;">
+    <button onclick="downloadInstagramMedia()">Download Media</button>
+</body>
+</html>
