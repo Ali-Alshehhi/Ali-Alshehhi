@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Translation Demo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+        padding-top: 50px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .result {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Translate English to Arabic and Arabic to English (Simulated with ChatGPT)</h2>
+    <textarea id="inputText" placeholder="Enter text to translate"></textarea>
+    <button onclick="translate()">Translate</button>
+    <div class="result">
+        <p id="outputText"></p>
+    </div>
+</div>
+
+<script>
+    function translate() {
+        const inputText = document.getElementById('inputText').value;
+        const lang = detectLanguage(inputText);
+        
+        if (lang === 'en') {
+            // Simulated translation to Arabic
+            simulateTranslation(inputText, 'ar');
+        } else if (lang === 'ar') {
+            // Simulated translation to English
+            simulateTranslation(inputText, 'en');
+        } else {
+            document.getElementById('outputText').textContent = 'Unsupported language or could not detect language.';
+        }
+    }
+
+    function detectLanguage(text) {
+        // Simulated language detection, for demo purpose only
+        // In real applications, use proper language detection libraries or APIs
+        const englishRegex = /^[A-Za-z0-9\s]+$/;
+        const arabicRegex = /^[\u0600-\u06FF\s]+$/;
+
+        if (englishRegex.test(text)) {
+            return 'en';
+        } else if (arabicRegex.test(text)) {
+            return 'ar';
+        } else {
+            return 'unknown';
+        }
+    }
+
+    function simulateTranslation(inputText, targetLang) {
+        // Simulated translation, replace with your logic or API calls
+        // Here we just simulate flipping text or basic transformation
+        let translatedText = inputText;
+        if (targetLang === 'ar') {
+            // Simulate basic transformation to Arabic
+            translatedText = 'السلام عليكم'; // Replace with your translation logic
+        } else if (targetLang === 'en') {
+            // Simulate basic transformation to English
+            translatedText = 'Hello, how are you?'; // Replace with your translation logic
+        }
+
+        document.getElementById('outputText').textContent = translatedText;
+    }
+</script>
+
+</body>
+</html>
