@@ -39,12 +39,23 @@
     button:hover {
         background-color: #45a049;
     }
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Login</h2>
+    <?php
+    // Check if there's an error message from login.php
+    if (isset($_GET['error']) && $_GET['error'] == 1) {
+        echo '<p class="error-message">Invalid username or password. Please try again.</p>';
+    }
+    ?>
     <form action="login.php" method="post">
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>
