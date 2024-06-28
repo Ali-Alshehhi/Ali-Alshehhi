@@ -13,12 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate credentials
     if ($username === $valid_username && $password === $valid_password) {
-        // Authentication successful, redirect to dashboard or home page
+        // Authentication successful, redirect to index.html with username in URL
         $_SESSION['username'] = $username;
-        header("Location: dashboard.php");
+        header("Location: index.html?username=" . urlencode($username));
         exit();
     } else {
-        // Authentication failed, redirect back to login page with error message
+        // Authentication failed, redirect back to login.html with error message
         header("Location: login.html?error=1");
         exit();
     }
